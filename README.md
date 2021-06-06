@@ -1,5 +1,4 @@
 <h1>KRAMS</h1>
-<h3>Kraus'scher Mapping Service</h3>
 <h4>Spring Data JPA with H2 DataBase and Spring Boot</h4>
 <hr>
 
