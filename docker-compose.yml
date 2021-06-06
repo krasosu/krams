@@ -1,0 +1,9 @@
+version: "3"
+services:
+  krata:
+    image: krams:0.1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080

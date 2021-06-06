@@ -1,0 +1,5 @@
+create table if not exists person_skills (person_id bigint not null, skills varchar(255));
+
+create table if not exists persons (id bigint not null, age integer, city varchar(255), creation_date timestamp, enabled boolean, modification_date timestamp, name varchar(255) not null, zip_code integer, primary key (id));
+
+create sequence if not exists hibernate_sequence start with 1 increment by 1;
