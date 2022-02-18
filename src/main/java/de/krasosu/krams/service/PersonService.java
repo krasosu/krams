@@ -6,15 +6,16 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 
 public interface PersonService {
-  Person createPerson(Person person);
 
-  Person updatePerson(Person person);
+    Person createPerson(Person person);
 
-  List<Person> getAllPerson();
+    Person updatePerson(Person person);
 
-  Person getPersonById(long personId);
+    List<Person> getAllPerson();
 
-  List<Person> getPersonBySpecification(Specification<Person> spec);
+    Person getPersonById(long personId);
 
-  void deletePerson(long id);
+    List<Person> getPersonBySpecification(Specification<Person> spec);
+
+    void deletePerson(long id);
 }
