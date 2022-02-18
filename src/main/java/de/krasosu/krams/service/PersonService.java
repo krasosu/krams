@@ -18,4 +18,6 @@ public interface PersonService {
     List<Person> getPersonBySpecification(Specification<Person> spec);
 
     void deletePerson(long id);
+
+    List<Person> getPersonByName(String name);
 }

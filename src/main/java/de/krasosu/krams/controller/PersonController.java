@@ -1,7 +1,6 @@
 package de.krasosu.krams.controller;
 
 import de.krasosu.krams.model.Person;
-import de.krasosu.krams.repository.PersonRepository;
 import de.krasosu.krams.service.PersonService;
 import net.kaczmarzyk.spring.data.jpa.domain.*;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -21,9 +20,6 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
-
-    @Autowired
-    private PersonRepository personRepository;
 
     @GetMapping("/persons")
     public ResponseEntity<List<Person>> getAllPerson() {
@@ -71,7 +67,7 @@ public class PersonController {
     @GetMapping(value = "/persons/lookup", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Person>> getPersonByName(@RequestParam("name") String name) {
 
-        return ResponseEntity.ok().body(this.personRepository.getPersonByName(name));
+        return ResponseEntity.ok().body(this.personService.getPersonByName(name));
     }
 
     @PostMapping("/persons")
