@@ -2,6 +2,7 @@ package de.krasosu.krams.service;
 
 import de.krasosu.krams.exception.ResourceNotFoundException;
 import de.krasosu.krams.model.Person;
+import de.krasosu.krams.model.Skill;
 import de.krasosu.krams.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -91,12 +89,15 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> getPersonByCriteria(long id, String name, Integer age, Integer zipCode, String city) {
+    public List<Person> getPersonByCriteria(long id, String name, Integer age, Integer zipCode, String city, String type) {
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
         Root<Person> root = criteria.from(Person.class);
+
+        Join<Person, Skill> joinList = root.join("skills");
+
         criteria.select(root);
 
         List<Predicate> predicates = new ArrayList<>();
@@ -114,6 +115,9 @@ public class PersonServiceImpl implements PersonService {
 
         if (Objects.nonNull(city))
             predicates.add(builder.equal(root.get("city"), city));
+
+        if (Objects.nonNull(type))
+            predicates.add(builder.equal(joinList.get("type"), type));
 
         CriteriaQuery<Person> query = criteria.select(root).where(predicates.toArray(new Predicate[0]));
 

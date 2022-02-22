@@ -69,8 +69,9 @@ public class PersonController {
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "age", required = false) Integer age,
             @RequestParam(value = "zipCode", required = false) Integer zipCode,
-            @RequestParam(value = "city", required = false) String city) {
-        return ResponseEntity.ok().body(this.personService.getPersonByCriteria(id, name, age, zipCode, city));
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "type", required = false) String type) {
+        return ResponseEntity.ok().body(this.personService.getPersonByCriteria(id, name, age, zipCode, city, type));
     }
 
 

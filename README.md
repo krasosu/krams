@@ -14,13 +14,17 @@ $ mvn clean install
 
 <h2>Filter Query Examples</h2>
 
-```
+```bash
 # list all persons
-curl localhost:8080/persons
+curl 'localhost:8080/persons'
 
 # single parameter filter
 curl 'localhost:8080/persons/search?age=42'
 
 # complex filter query with multiple request parameters
 curl curl 'localhost:8080/persons/search?city=Berlin&age=42'
+
+# jpa criteria api
+curl 'localhost:8080/persons/criteria?id=1&name=Alice&type=Sport'
+
 ```
