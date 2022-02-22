@@ -8,7 +8,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -17,6 +24,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Override
     public Person createPerson(Person person) {
@@ -78,5 +88,35 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<Person> getPersonByName(String name) {
         return this.personRepository.getPersonByName(name);
+    }
+
+    @Override
+    public List<Person> getPersonByCriteria(long id, String name, Integer age, Integer zipCode, String city) {
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
+        Root<Person> root = criteria.from(Person.class);
+        criteria.select(root);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(builder.equal(root.get("id"), id));
+
+        if (Objects.nonNull(name))
+            predicates.add(builder.equal(root.get("name"), name));
+
+        if (Objects.nonNull(age))
+            predicates.add(builder.equal(root.get("age"), age));
+
+        if (Objects.nonNull(zipCode))
+            predicates.add(builder.equal(root.get("zipCode"), zipCode));
+
+        if (Objects.nonNull(city))
+            predicates.add(builder.equal(root.get("city"), city));
+
+        CriteriaQuery<Person> query = criteria.select(root).where(predicates.toArray(new Predicate[0]));
+
+        return entityManager.createQuery(query).getResultList();
     }
 }

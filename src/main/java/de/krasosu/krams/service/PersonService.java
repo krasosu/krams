@@ -20,4 +20,6 @@ public interface PersonService {
     void deletePerson(long id);
 
     List<Person> getPersonByName(String name);
+
+    List<Person>  getPersonByCriteria(long id, String name, Integer age, Integer zipCode, String city);
 }

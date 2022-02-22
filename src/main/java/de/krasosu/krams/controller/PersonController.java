@@ -36,7 +36,6 @@ public class PersonController {
     public ResponseEntity<List<Person>> debug(
             @Join(path = "skills", alias = "s")
             @Spec(path = "s.type", params = "skilltype", spec = Like.class) Specification<Person> spec) {
-
         return ResponseEntity.ok().body(this.personService.getPersonBySpecification(spec));
 
     }
@@ -60,13 +59,23 @@ public class PersonController {
                     @Spec(path = "s.name", params = "skillname", spec = Like.class)
             })
                     Specification<Person> spec) {
-
         return ResponseEntity.ok().body(this.personService.getPersonBySpecification(spec));
     }
 
+
+    @GetMapping(value = "/persons/criteria", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Person>> getPersonByCriteria(
+            @RequestParam(value = "id", required = false) long id,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "age", required = false) Integer age,
+            @RequestParam(value = "zipCode", required = false) Integer zipCode,
+            @RequestParam(value = "city", required = false) String city) {
+        return ResponseEntity.ok().body(this.personService.getPersonByCriteria(id, name, age, zipCode, city));
+    }
+
+
     @GetMapping(value = "/persons/lookup", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Person>> getPersonByName(@RequestParam("name") String name) {
-
         return ResponseEntity.ok().body(this.personService.getPersonByName(name));
     }
 
@@ -86,6 +95,4 @@ public class PersonController {
         this.personService.deletePerson(id);
         return HttpStatus.OK;
     }
-
-
 }
