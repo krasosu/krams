@@ -100,10 +100,20 @@
                     <value>test</value>
                 </property>
             </activation>
+            <properties>
+                <DS_USERNAME>sa</DS_USERNAME>
+                <DS_PASSWORD>password</DS_PASSWORD>
+            </properties>
         </profile>
     </profiles>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
