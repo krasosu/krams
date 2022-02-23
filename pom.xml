@@ -15,6 +15,7 @@
     <description>attribute mapping service</description>
     <properties>
         <java.version>1.8</java.version>
+        <spring.profiles.active>dev</spring.profiles.active>
     </properties>
     <dependencies>
         <dependency>
@@ -34,32 +35,27 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>net.kaczmarzyk</groupId>
             <artifactId>specification-arg-resolver</artifactId>
             <version>2.6.2</version>
         </dependency>
-
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -71,7 +67,6 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
-
         <!-- metrics -->
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -87,8 +82,36 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <property>
+                    <name>spring.profiles.active</name>
+                    <value>test</value>
+                </property>
+            </activation>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Dspring.profiles.active=${spring.profiles.active}</argLine>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
