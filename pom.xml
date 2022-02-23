@@ -101,8 +101,8 @@
                 </property>
             </activation>
             <properties>
-                <DS_USERNAME>sa</DS_USERNAME>
-                <DS_PASSWORD>password</DS_PASSWORD>
+                <spring.datasource.username>sa</spring.datasource.username>
+                <spring.datasource.password>password</spring.datasource.password>
             </properties>
         </profile>
     </profiles>
