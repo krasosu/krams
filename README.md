@@ -5,12 +5,13 @@
 <h2>Build</h2>
 
 ```
-$ mvn clean install
+$ mvn clean install -P dev|test
 ```
 
 <h2>Documentation </h3>
 
 - [Swagger](http://localhost:8080/swagger-ui.html)
+- [Tests](https://reflectoring.io/spring-boot-data-jpa-test/)
 
 <h2>Filter Query Examples</h2>
 
